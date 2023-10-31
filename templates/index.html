@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Glavnaya
+{% endblock %}
+
+{% block css %}
+href = "{{url_for('static', filename='css/main.css')}}"
+{% endblock %}
+
+{% block body %}
+
+    <div>
+        <div id="container">
+            <h1>Сокращенние ссылок</h1>
+            <div class="lineund"></div>
+    <from action="/create_link" method="post" id="from">
+        <div class="link">
+            <label for="d-link"></label>
+            <input type="text" placeholder="Ссылка" name="link" id="link" required>
+        </div>
+
+         <div class="d-type">
+             <label for="type"></label>
+                <select name="type">
+                 {% for item in types %}
+                    <option value="{{item['id_type']}}">{{item['type']}}</option>
+                 {% endfor %}
+                </select>
+         </div>
+
+    <div class="ISnik">
+      <p for="nik">Здесь нужен ваш ник</p>
+        <input type="checkbox"  name="ispsev" id="ispsev_input" >
+    </div>
+
+    <div class="nik">
+      <label for="psev"></label>
+      <input disabled  type="text" placeholder="Ваш ник" name="psev" id="psev_input" required>
+    </div>
+
+    <div class="submit">
+      <input type="submit" value="Нажмите и получите Вашу ссылку" id="form_button" />
+    </div>
+    </from>
+            <div class="ghost-div" style="">
+            {% for c, mes in get_flashed_messages(True) %}
+            {% if(c == "errors")%}
+                <p style="color:blue">{{mes}}</p>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="ghost-div" style="">
+            {% for c, mes in get_flashed_messages(True) %}
+            {% if(c == "url")%}
+                <a href={{mes}}>{{mes}}</a>
+            {% endif %}
+            {% endfor %}
+            {% for c, mes in get_flashed_messages(True) %}
+            {% if(c == "link")%}
+                <a href={{mes}}>Перейти по ссылке</a>
+            {% endif %}
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+
+<script>
+  document.querySelector("#ispsev_input").addEventListener("change", function(e){
+    console.log(e.currentTarget.checked)
+    document.querySelector("#psev_input").disabled = !e.currentTarget.checked
+})
+</script>
+
+{% endblock %}
+
+
