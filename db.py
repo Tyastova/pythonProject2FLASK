@@ -39,8 +39,21 @@ def setTypes(arr):
         cursor.execute('''INSERT INTO type_links('name') VALUES(?);''', (i,))
         print(i)
     connect.commit()
-    connect.close()
 
+def getTypes():
+    connect = sqlite3.connect("db.db")
+    cursor = connect.cursor()
+    return cursor.execute('SELECT * FROM type_links').fetchall()
+
+
+def setTypes(arr):
+    connect = sqlite3.connect("db.db")
+    cursor = connect.cursor()
+    for i in arr:
+        cursor.execute('''INSERT INTO type_links('name') VALUES(?);''', (i,))
+        print(i)
+    connect.commit()
+    connect.close()
 def getTypes():
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
@@ -50,45 +63,56 @@ def getLogin(login):
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
     return cursor.execute('SELECT id FROM users WHERE login = ?',(login,)).fetchone()
+
 def getPsev(psev):
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
     return cursor.execute('SELECT link FROM links WHERE short_link = ?',(psev,)).fetchone()
-
-def getTypebyLink(link):
-    connect = sqlite3.connect("db.db")
-    cursor = connect.cursor()
-    return cursor.execute('SELECT type_id FROM links WHERE  short_link = ?',(link,)).fetchone()
 
 def getLinksByUser(us_id):
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
     return cursor.execute('SELECT link, count, type_links.name as type, short_link as short, links.id, type_id FROM links INNER JOIN type_links ON type_id = type_links.id WHERE user_id = ?',(us_id,)).fetchall()
 
+
+def getTypebyLink(link):
+    connect = sqlite3.connect("db.db")
+    cursor = connect.cursor()
+    return cursor.execute('SELECT type_id FROM links WHERE short_link = ?',(link,)).fetchone()
+
 def getUserbyLink(link):
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
     return cursor.execute('SELECT user_id FROM links WHERE short_link = ?',(link,)).fetchone()
-def updateCounfLink(link):
+
+def deleteLink(link_id):
+    connect = sqlite3.connect('db.db')
+    cursor = connect.cursor()
+    cursor.execute('''DELETE FROM 'links' WHERE id = ?''', (link_id,))
+    connect.commit()
+    connect.close()
+
+def updateCounOfLink(link):
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
     cursor.execute("UPDATE links SET count = count+1 WHERE short_link = ?", (link, ))
     connect.commit()
     connect.close()
 
-def editTypefLink(type_id, link_id):
+def editTypeOfLink(type_id, link_id):
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
     cursor.execute("UPDATE links SET type_id = ? WHERE id = ?", (type_id, link_id, ))
     connect.commit()
     connect.close()
 
-def editPsevfLink(psev, link_id):
+def editPsevOfLink(psev, link_id):
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
     cursor.execute("UPDATE links SET short_link = ? WHERE id = ?", (psev, link_id, ))
     connect.commit()
     connect.close()
+
 def getPass(login, passw):
     connect = sqlite3.connect("db.db")
     cursor = connect.cursor()
@@ -115,12 +139,6 @@ def insertUser(login, password):
     connect.commit()
     connect.close()
 
-def deleteLink(link_id):
-    connect = sqlite3.connect('db.db')
-    cursor = connect.cursor()
-    cursor.execute('''DELETE FROM 'links' WHERE id = ?''', (link_id,))
-    connect.commit()
-    connect.close()
-
 connect.commit()
+
 connect.close()
