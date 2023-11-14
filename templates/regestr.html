@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Registration
+Регистрация
 {% endblock %}
 
 {% block css %}
@@ -17,7 +17,7 @@ href = "{{url_for('static', filename='css/registr.css')}}"
     <input type="text" name="login" placeholder="ваш логин" />
     <input type="password" name="pass" placeholder="пароль" />
     <input type="password" name="cpass" placeholder="повторите пароль" />
-      <input   value="Создать" name="insert" type="submit" class="next action-button"/>
+      <input value="Создать" name="insert" type="submit" class="next action-button"/>
   </fieldset>
     </form>
     <div class="register">
@@ -28,5 +28,4 @@ href = "{{url_for('static', filename='css/registr.css')}}"
 {% for message in get_flashed_messages() %}
 <p>{{message}}</p>
 {% endfor %}
-
 {% endblock %}
