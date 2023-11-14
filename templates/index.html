@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Glavnaya
+Главная
 {% endblock %}
 
 {% block css %}
@@ -14,43 +14,47 @@ href = "{{url_for('static', filename='css/main.css')}}"
         <div id="container">
             <h1>Сокращенние ссылок</h1>
             <div class="lineund"></div>
-    <from action="/create_link" method="post" id="from">
-        <div class="link">
-            <label for="d-link"></label>
-            <input type="text" placeholder="Ссылка" name="link" id="link" required>
-        </div>
 
-         <div class="d-type">
-             <label for="type"></label>
-                <select name="type">
-                 {% for item in types %}
-                    <option value="{{item['id_type']}}">{{item['type']}}</option>
-                 {% endfor %}
-                </select>
-         </div>
+    <form action="/createLink" method="post">
+        <div class="link">
+        <label for="d-link"></label>
+        <input type="text" placeholder="Ссылка" name="link" id="link" required>
+    </div>
+
+     <div class="d-type">
+         <label for="type"></label>
+            <select name="type">
+             {% for item in types %}
+                <option value="{{item['id_type']}}">{{item['type']}}</option>
+             {% endfor %}
+            </select>
+     </div>
 
     <div class="ISnik">
-      <p for="nik">Здесь нужен ваш ник</p>
-        <input type="checkbox"  name="ispsev" id="ispsev_input" >
+        <p for="nik">Подтвердите свой ник</p>
+        <input type="checkbox"  name="nik" id="ispsev_input" >
     </div>
 
     <div class="nik">
-      <label for="psev"></label>
-      <input disabled  type="text" placeholder="Ваш ник" name="psev" id="psev_input" required>
+        <label for="psev"></label>
+        <input disabled  type="text" placeholder="Ваш ник" name="psev" id="psev_input" required>
+    </div>
+    
+    <div class="submit">
+        
+        <input type="submit" value="Нажмите и получите Вашу ссылку" id="form_button1" />
     </div>
 
-    <div class="submit">
-      <input type="submit" value="Нажмите и получите Вашу ссылку" id="form_button" />
-    </div>
-    </from>
-            <div class="ghost-div" style="">
+    </form>
+
+        <div class="ghost-div" style="">
             {% for c, mes in get_flashed_messages(True) %}
-            {% if(c == "errors")%}
+            {% if(c == "error")%}
                 <p style="color:blue">{{mes}}</p>
             {% endif %}
             {% endfor %}
         </div>
-        <div class="ghost-div" style="">
+        <div class="ghost-div">
             {% for c, mes in get_flashed_messages(True) %}
             {% if(c == "url")%}
                 <a href={{mes}}>{{mes}}</a>

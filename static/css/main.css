@@ -1,3 +1,31 @@
 .navbar-brand{
 background-color: #282c34;
 }
+body{
+    background-color: rgb(226, 185, 145)
+}
+.lab{
+    border: 2px solid black;
+    font-size: 20px;
+    color: black;
+}
+.sel{
+    border: 2px solid black;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.pn{
+    font-size: 20px;
+    font-weight:bolder;
+}
+.ISnik{
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.ni{
+    margin-bottom: 10px;
+    border: 2px solid black;
+    font-size: 20px;
+    color: black;
+}
