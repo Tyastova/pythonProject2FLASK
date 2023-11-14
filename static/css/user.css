@@ -1,0 +1,19 @@
+body{
+    background-color: rgb(226, 185, 145)
+}
+   TABLE {
+    border-collapse: collapse; /* Убираем двойные линии между ячейками */
+    width: 300px; /* Ширина таблицы */
+   }
+   TH {
+    background: lavender; /* Цвет фона ячейки */
+    text-align: left; /* Выравнивание по левому краю */
+   }
+   TD {
+    background: #fff; /* Цвет фона ячеек */
+    text-align: center; /* Выравнивание по центру */
+   }
+   TH, TD {
+    border: 1px solid black; /* Параметры рамки */
+    padding: 4px; /* Поля вокруг текста */
+   }
