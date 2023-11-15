@@ -31,7 +31,7 @@ href = "{{url_for('static', filename='css/main.css')}}"
      </div>
 
     <div class="ISnik">
-        <p for="nik">Подтвердите свой ник</p>
+        <p for="nik">Подтвердите свой псевдоним</p>
         <input type="checkbox"  name="nik" id="ispsev_input" >
     </div>
 
@@ -54,6 +54,7 @@ href = "{{url_for('static', filename='css/main.css')}}"
             {% endif %}
             {% endfor %}
         </div>
+
         <div class="ghost-div">
             {% for c, mes in get_flashed_messages(True) %}
             {% if(c == "url")%}

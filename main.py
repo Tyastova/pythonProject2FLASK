@@ -3,20 +3,18 @@ from dbController import *
 import hashlib
 import string
 import json
+import random
 from random import choice, randint
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'xyijagjigfiljgfjioagojgraijosdftfghbhjngaoinjdhaih'
 
-
-
-
 def Nav():
     if session.get("auth"):
         arr = [{"url": "/", "name": "Главная"}, {"url": "/user", "name": session.get("login")}, {"url": "/logout", "name": "exit"}]
     else:
-        arr = [{"url": "/", "name": "Главная"}, {"url": "/reg", "name": "Регистрация / Авторизация"}]
+        arr = [{"url": "/", "name": "Главная"}, {"url": "/regestr", "name": "Регистрация / Авторизация"}]
     return arr
 
 def Types(arr):
@@ -39,15 +37,15 @@ def index():
     if session.get("auth") == None:
         session["auth"] = False
     arr = getTypes()
-    return render_template('index.html', nav = Nav(), types=Types(arr))
+    return render_template('index.html', nav=Nav(), types=Types(arr))
 
 @app.route('/auth')
 def auth():
-    return render_template('auth.html', nav = Nav())
+    return render_template('auth.html', nav=Nav())
 
 @app.route('/noacces')
 def noacces():
-    return render_template('noacces.html', nav = Nav())
+    return render_template('noacces.html', nav=Nav())
 
 @app.route('/user')
 def user():
@@ -55,7 +53,7 @@ def user():
     print(arr)
     links = getLinksByUser(session.get("user_id"))
     print(links)
-    return render_template('user.html', nav = Nav(), links=links, types=Types(arr))
+    return render_template('user.html', nav=Nav(), links=links, types=Types(arr))
 
 @app.route('/logout')
 def logout():
@@ -63,7 +61,7 @@ def logout():
     session.pop('link', None)
     session.pop('auth', None)
     return redirect('/', code = 302)
-@app.route('/reg')
+@app.route('/regestr')
 def reg():
     return render_template('regestr.html', nav=Nav())
 
@@ -81,23 +79,28 @@ def edit_psev():
     if request.method == 'POST':
         link_id = request.form['id']
         psev = request.form["psev"]
-        new_link = request.host_url + "link/" + psev
-        if getPsev(new_link) != None:
-            flash("Псевдоним занят", category="error")
+        if psev == '':
+            host_url = request.host_url
+            short_link = host_url + "link/" + ''.join(choice(string.ascii_letters + string.digits) for _ in range(randint(8, 12)))
+            editPsevfLink(short_link, link_id)
+
+            flash("Заполните псевдоним", category="error")
         else:
-            editPsevfLink(new_link, link_id)
+            new_link = request.host_url + "link/" + psev
+            if getPsev(new_link) != None:
+                flash("Псевдоним занят", category="error")
+            else:
+                editPsevfLink(new_link, link_id)
         return redirect('/user', code=302)
 
 @app.route('/edit_type', methods=['POST'])
 def edit_type():
     print("edit_type")
-
     if request.method == 'POST':
         link_id = request.form['id']
         type_id = request.form["type"]
         editTypefLink(type_id, link_id)
         return redirect('/user', code=302)
-
 @app.route('/insert', methods=['POST'])
 def insert():
     if request.method == 'POST':
@@ -105,32 +108,26 @@ def insert():
         passw = request.form['cpass']
         password = request.form['pass']
         print(getLogin(login))
-        if(getLogin(login) == None):
-            print("insert")
-            print(passw)
-            print(password)
-            if passw == password:
-                hashas = hashlib.md5(request.form["pass"].encode())
-                password = hashas.hexdigest()
-                insertUser(login,password)
-                id_user = getLogin(login)
-                session["user_id"] = id_user[0]
-                session["login"] = login
-                session["auth"] = True
-
-                return redirect('/', code = 302)
+        if(login != '' and passw != '' and password != ''):
+            if(getLogin(login) == None):
+                if passw == password:
+                    hashas = hashlib.md5(request.form["pass"].encode())
+                    password = hashas.hexdigest()
+                    insertUser(login, password)
+                    id_user = getLogin(login)
+                    session["user_id"] = id_user[0]
+                    session["login"] = login
+                    session["auth"] = True
+                    return redirect('/', code = 302)
+                else:
+                    flash("Пароли не совпадают")
+                    return redirect('/reg', code = 302)
             else:
-
-                flash("Пароли не совпадают")
-                return redirect('/reg', code = 302)
-        else:
-            flash("Логин занят")
-            return redirect('/reg', code=302)
-
+                flash("Логин занят")
+                return redirect('/reg', code=302)
 @app.route('/memberlogin', methods=['POST'])
 def memberlogin():
     if request.method == 'POST':
-
         login = request.form['login']
         passw = request.form['pass']
         print(getLogin(login))
@@ -156,6 +153,7 @@ def memberlogin():
         else:
             flash("Логин не найден")
             return redirect('/auth', code=302)
+
 
 @app.route('/createLink', methods=['POST'])
 def linkCreate():
@@ -183,11 +181,11 @@ def linkCreate():
                         insertLink(link, session.get("user_id"), type, short_link)
                     else:
                         insertLinkNotAuth(link, type, short_link)
-                        flash(link, category="link")
-                        flash(short_link, category="url")
+                    flash(link, category="link")
+                    flash(short_link, category="url")
             else:
-                short_link = host_url + "link/" + ''.join(
-                    choice(string.ascii_letters + string.digits) for _ in range(randint(8, 12)))
+                short_link = host_url + "link/" + ''.join(choice(string.ascii_letters + string.digits) for _ in range(randint(8, 12)))
+
                 if session.get("auth"):
                     insertLink(link, session.get("user_id"), type, short_link);
                 else:
