@@ -1,4 +1,29 @@
-body{
+body {
     background-color: rgb(226, 185, 145)
 }
 
+.ll{
+border: 2px solid black;
+padding-bottom: 30px;
+width:200px;
+}
+
+a{
+color:black;
+font-size:20px;
+}
+
+input[type=text], [type=password], [type=submit] {
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid black;
+  border-left-style: dashed;
+  border-radius: 10px;
+  color: black;
+}
+
+.img-reg {
+  width: 200px;
+  height: 200px;
+}

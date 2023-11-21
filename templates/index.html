@@ -10,47 +10,47 @@ href = "{{url_for('static', filename='css/main.css')}}"
 
 {% block body %}
 
-    <div>
-        <div id="container">
-            <h1>Сокращенние ссылок</h1>
-            <div class="lineund"></div>
+<div style="width: 50%; margin: 0 auto; text-align: center;" class="la">
+    <img class="img1" src="./static/img/fonn.png" alt="IMG">
+    <div id="container">
+        <h1>Сокращенние ссылок</h1>
+        <div class="lineund"></div>
 
-    <form action="/createLink" method="post">
-        <div class="link">
-        <label for="d-link"></label>
-        <input type="text" placeholder="Ссылка" name="link" id="link" required>
-    </div>
+        <form action="/createLink" method="post">
+            <div class="link">
+                <label for="d-link"></label>
+                <input type="text" placeholder="Ссылка" name="link" id="link" required>
+            </div>
 
-     <div class="d-type">
-         <label for="type"></label>
-            <select name="type">
-             {% for item in types %}
-                <option value="{{item['id_type']}}">{{item['type']}}</option>
-             {% endfor %}
-            </select>
-     </div>
+            <div class="d-type">
+                <label for="type"></label>
+                <select name="type" class="select-css">
+                    {% for item in types %}
+                    <option value="{{item['id_type']}}">{{item['type']}}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <div class="ISnik">
-        <p for="nik">Подтвердите свой псевдоним</p>
-        <input type="checkbox"  name="nik" id="ispsev_input" >
-    </div>
+            <div class="ISnik">
+                <p for="nik" class="pn" >Подтвердите свой псевдоним</p>
+                <input type="checkbox" name="nik" id="ispsev_input">
+            </div>
 
-    <div class="nik">
-        <label for="psev"></label>
-        <input disabled  type="text" placeholder="Ваш ник" name="psev" id="psev_input" required>
-    </div>
-    
-    <div class="submit">
-        
-        <input type="submit" value="Нажмите и получите Вашу ссылку" id="form_button1" />
-    </div>
+            <div class="nik">
+                <label for="psev"></label>
+                <input disabled type="text" placeholder="Ваш ник" name="psev" id="psev_input" required>
+            </div>
 
-    </form>
+            <div class="submit">
+                <input type="submit" value="Нажмите и получите Вашу ссылку" id="form_button1" class="but"/>
+            </div>
+
+        </form>
 
         <div class="ghost-div" style="">
             {% for c, mes in get_flashed_messages(True) %}
             {% if(c == "error")%}
-                <p style="color:blue">{{mes}}</p>
+            <p style="color:red">{{mes}}</p>
             {% endif %}
             {% endfor %}
         </div>
@@ -58,23 +58,29 @@ href = "{{url_for('static', filename='css/main.css')}}"
         <div class="ghost-div">
             {% for c, mes in get_flashed_messages(True) %}
             {% if(c == "url")%}
-                <a href={{mes}}>{{mes}}</a>
+            <a href={{mes}}>{{mes}}</a>
             {% endif %}
             {% endfor %}
             {% for c, mes in get_flashed_messages(True) %}
             {% if(c == "link")%}
-                <a href={{mes}}>Перейти по ссылке</a>
+            <a href={{mes}}>Перейти по ссылке</a>
             {% endif %}
             {% endfor %}
         </div>
-        </div>
     </div>
+</div>
 
 <script>
   document.querySelector("#ispsev_input").addEventListener("change", function(e){
     console.log(e.currentTarget.checked)
     document.querySelector("#psev_input").disabled = !e.currentTarget.checked
 })
+
+
+
+
+
+
 </script>
 
 {% endblock %}

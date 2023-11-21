@@ -1,31 +1,42 @@
-    body{
-    background-color: rgb(226, 185, 145)
-    }
-   TABLE {
-    border-collapse: collapse; /* Убираем двойные линии между ячейками */
-    width: 100px; /* Ширина таблицы */
-    margin-top: 10px;
+ body {
+     background-color: rgb(226, 185, 145);
+ }
 
-   }
-   TH {
-    background: lavender; /* Цвет фона ячейки */
-    text-align: center; /* Выравнивание по левому краю */
+ TABLE {
+     border-collapse: collapse;
 
-   }
-   TD {
-    background: #fff; /* Цвет фона ячеек */
-    text-align: center; /* Выравнивание по центру */
-   }
-   TH, TD {
-    border: 1px solid black; /* Параметры рамки */
-    padding: 4px; /* Поля вокруг текста */
-   }
-   input{
-   border: 1px solid black;
-   }
-   select{
-   border: 1px solid black;
-   }
-   button{
-   border: 1px solid black;
-   }
+     margin-top: 5px;
+         table-layout: fixed;
+    width:100%
+ }
+
+ TH {
+     background: lavender;
+     text-align: center;
+
+ }
+
+ TD {
+     background: #fff;
+     /* Цвет фона ячеек */
+     text-align: center;
+     /* Выравнивание по центру */
+     word-wrap:break-word;
+ }
+
+ TH,
+ TD {
+     border: 1px solid black;
+     /* Параметры рамки */
+     padding: 10px;
+     /* Поля вокруг текста */
+
+ }
+
+ input {
+     border: 1px solid black;
+ }
+
+ select {
+     border: 1px solid black;
+ }

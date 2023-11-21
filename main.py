@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, flash, get_flashed_messages, session
+from flask import Flask, render_template, url_for, request, redirect, flash, get_flashed_messages, session, abort
 from dbController import *
 import hashlib
 import string
@@ -163,7 +163,6 @@ def linkCreate():
         link = request.form['link']
         type = request.form['type']
         print(session.get("auth"))
-        print(link)
         if link != "":
             if request.form.getlist('nik'):
                 psev = request.form['psev']
@@ -185,7 +184,6 @@ def linkCreate():
                     flash(short_link, category="url")
             else:
                 short_link = host_url + "link/" + ''.join(choice(string.ascii_letters + string.digits) for _ in range(randint(8, 12)))
-
                 if session.get("auth"):
                     insertLink(link, session.get("user_id"), type, short_link);
                 else:
@@ -194,21 +192,26 @@ def linkCreate():
                 flash(short_link, category="url")
         else:
             flash("Введите ссылку", category="error")
+    # else:
+    #     flash("Данная ссылка у вас уже есть", category="error")
+    #     return redirect(request.host_url + 'links', code=302)
     return redirect("/", code=302)
 
 #перенаправление ссылки
 @app.route('/link/<short_link>')
 def reassign_link(short_link):
+    #dd = sqlite3.connect(r"database.db")
+    #cursor = dd.cursor()
     user_link = request.host_url + "link/" + short_link
     uslink = getPsev(user_link)
     link = uslink[0]
     print(link)
+
     if link !=None:
         print(getTypebyLink(user_link))
         type = getTypebyLink(user_link)
         print(user_link)
         type_link = type[0]
-        print("fgdhfdf")
         if type_link == 1:
             updateCounfLink(user_link)
             return redirect(link)
@@ -229,6 +232,9 @@ def reassign_link(short_link):
                         return redirect('/noacces')
             else:
                 return redirect("/auth")
+    else:
+        abort(404)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

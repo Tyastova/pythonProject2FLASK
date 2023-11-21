@@ -10,59 +10,59 @@ href = "{{url_for('static', filename='css/user.css')}}"
 
 {% block body %}
 
-			 	{% for c, mes in get_flashed_messages(True) %}
-            	{% if(c == "error")%}
-               	 	<p style="color:black" >{{mes}}</p>
-            	{% endif %}
-            	{% endfor %}
+{% for c, mes in get_flashed_messages(True) %}
+{% if(c == "error")%}
+<p style="color:black">{{mes}}</p>
+{% endif %}
+{% endfor %}
 <div class="container">
-<table class="table">
-	<thead>
-		<tr>
-			<th>Исходная ссылка</th>
-			<th>Короткая ссылка</th>
-			<th>Количество переходов</th>
-			<th>Тип</th>
-			<th></th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-	 {% for i in links %}
-	 	<tr>
-			<td class="max-250px">{{i[0]}}</td>
-			<td>{{i[3]}}</td>
-			<td>{{i[1]}}</td>
-			<td>
-			 	<form method="POST" action="edit_type">
-					 <select name="type">
-					 	{% for t in types %}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Исходная ссылка</th>
+				<th>Короткая ссылка</th>
+				<th>Количество переходов</th>
+				<th>Тип</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in links %}
+			<tr>
+				<td class="max-250px">{{i[0]}}</td>
+				<td>{{i[3]}}</td>
+				<td>{{i[1]}}</td>
+				<td>
+					<form method="POST" action="edit_type">
+						<select name="type">
+							{% for t in types %}
 							{% if(t['id_type'] == i[5])%}
-                				<option selected value="{{t['id_type']}}">{{t['type']}}</option>
-            				{% else %}
-					 			<option value="{{t['id_type']}}">{{t['type']}}</option>
-						 	{% endif %}
-						 {% endfor %}
-				 	</select>
-					<button name="id" value={{i[4]}}>Ред</button>
-			 	</form>
+							<option selected value="{{t['id_type']}}">{{t['type']}}</option>
+							{% else %}
+							<option value="{{t['id_type']}}">{{t['type']}}</option>
+							{% endif %}
+							{% endfor %}
+						</select>
+						<button name="id" value={{i[4]}}>&#9998;</button>
+					</form>
 
-			</td>
-		 	<td>
-			 	<form method="POST" action="edit_psev">
-					<input name="psev" value={{i[3].replace (request.host_url + 'link/', '') }} />
-					<button name="id" value={{i[4]}}>Ред</button>
-			 	</form>
+				</td>
+				<td>
+					<form method="POST" action="edit_psev">
+						<input name="psev" value={{i[3].replace (request.host_url + 'link/' , '' ) }} />
+						<button name="id" value={{i[4]}}>&#9998;</button>
+					</form>
 
-		 	</td>
-			<td>
-				<form method="POST" action="del">
-					<button name="id" value={{i[4]}}>Удалить</button>
-				</form>
-			</td>
-		</tr>
-     {% endfor %}
-	</tbody>
-</table>
+				</td>
+				<td>
+					<form method="POST" action="del">
+						<button name="id" value={{i[4]}}>&#128465;</button>
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
 {% endblock %}

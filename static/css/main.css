@@ -1,31 +1,94 @@
-.navbar-brand{
-background-color: #282c34;
+.navbar-brand {
+  background-color: #282c34;
 }
-body{
-    background-color: rgb(226, 185, 145)
+
+body {
+  background-color: rgb(226, 185, 145);
 }
-.lab{
-    border: 2px solid black;
-    font-size: 20px;
-    color: black;
+
+.la {
+  border: 2px solid black;
+  padding-bottom: 10px;
 }
-.sel{
-    border: 2px solid black;
-    font-size: 20px;
-    margin-top: 10px;
+
+h1 {
+  text-align: center;
 }
-.pn{
-    font-size: 20px;
-    font-weight:bolder;
+
+.but {
+  display: inline-block;
+  border-radius: 10px;
+  border: 2px solid black;
+  border-left-style: dashed;
+  color: black;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
+  width: 350px;
+  cursor: pointer;
 }
-.ISnik{
-    position: relative;
-    display: flex;
-    flex-wrap: nowrap;
+
+input[type=text] {
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid black;
+  border-left-style: dashed;
+  border-radius: 10px;
+  color: black;
 }
-.ni{
-    margin-bottom: 10px;
-    border: 2px solid black;
-    font-size: 20px;
-    color: black;
+
+.lab {
+  border: 2px solid black;
+  font-size: 20px;
+  color: black;
+}
+
+.sel {
+  border: 2px solid black;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.pn {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.ISnik {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.ni {
+  margin-bottom: 10px;
+  border: 2px solid black;
+  font-size: 20px;
+  color: black;
+}
+
+.select-css {
+  width: 200px;
+  height: 50px;
+  padding: 5px;
+  border: 3px solid black;
+  border-left-style: dashed;
+  font-size: 20px;
+  color: black;
+  border-radius: 5px;
+  box-shadow: 2px 2px white;
+}
+
+.d-type {
+  position: relative;
+  display: inline-block;
+}
+
+.img1 {
+  width: 200px;
+  height: 200px;
 }
