@@ -124,3 +124,14 @@ def deleteLink(link_id):
 
 connect.commit()
 connect.close()
+
+def dlSpr(userid, link):
+    connect = sqlite3.connect("db.db")
+    cursor = connect.cursor()
+    lpr = cursor.execute("SELECT * FROM links WHERE user_id =? and link =?",(userid,link)).fetchone()
+    if lpr != None:
+        return False
+    else:
+        return True
+    connect.commit()
+    connect.close()

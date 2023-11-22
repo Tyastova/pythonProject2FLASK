@@ -163,51 +163,48 @@ def linkCreate():
         link = request.form['link']
         type = request.form['type']
         print(session.get("auth"))
-        if link != "":
-            if request.form.getlist('nik'):
-                psev = request.form['psev']
-                link_psev = host_url + "link/" + psev
-                print(link_psev)
-                print(getPsev(psev))
-                if getPsev(link_psev) != None:
+        if dlSpr(session.get("user_id"), link):
+            if link != "":
+                if request.form.getlist('nik'):
+                    psev = request.form['psev']
+                    link_psev = host_url + "link/" + psev
+                    print(link_psev)
                     print(getPsev(psev))
-                    flash("Выберите другой псевдоним, этот занят", category="error")
+                    if getPsev(link_psev) != None:
+                        print(getPsev(psev))
+                        flash("Выберите другой псевдоним, этот занят", category="error")
+                    else:
+                        short_link = host_url + "link/" + psev
+                        print("lin")
+                        if session.get("auth"):
+                            print("link")
+                            insertLink(link, session.get("user_id"), type, short_link)
+                        else:
+                            insertLinkNotAuth(link, type, short_link)
+                        flash(link, category="link")
+                        flash(short_link, category="url")
                 else:
-                    short_link = host_url + "link/" + psev
-                    print("lin")
+                    short_link = host_url + "link/" + ''.join(choice(string.ascii_letters + string.digits) for _ in range(randint(8, 12)))
                     if session.get("auth"):
-                        print("link")
-                        insertLink(link, session.get("user_id"), type, short_link)
+                        insertLink(link, session.get("user_id"), type, short_link);
                     else:
                         insertLinkNotAuth(link, type, short_link)
                     flash(link, category="link")
                     flash(short_link, category="url")
             else:
-                short_link = host_url + "link/" + ''.join(choice(string.ascii_letters + string.digits) for _ in range(randint(8, 12)))
-                if session.get("auth"):
-                    insertLink(link, session.get("user_id"), type, short_link);
-                else:
-                    insertLinkNotAuth(link, type, short_link)
-                flash(link, category="link")
-                flash(short_link, category="url")
+                flash("Введите ссылку", category="error")
         else:
-            flash("Введите ссылку", category="error")
-    # else:
-    #     flash("Данная ссылка у вас уже есть", category="error")
-    #     return redirect(request.host_url + 'links', code=302)
+            flash("Данная ссылка есть", category="error")
     return redirect("/", code=302)
 
 #перенаправление ссылки
 @app.route('/link/<short_link>')
 def reassign_link(short_link):
-    #dd = sqlite3.connect(r"database.db")
-    #cursor = dd.cursor()
     user_link = request.host_url + "link/" + short_link
     uslink = getPsev(user_link)
-    link = uslink[0]
-    print(link)
 
-    if link !=None:
+    if uslink !=None:
+        link = uslink[0]
         print(getTypebyLink(user_link))
         type = getTypebyLink(user_link)
         print(user_link)
